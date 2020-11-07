@@ -2,6 +2,7 @@ from PIL import Image
 import numpy as np
 import tensorflow as tf
 import coremltools as ct
+import coremltools.proto.FeatureTypes_pb2 as ft 
 
 def create_model(IMG_SHAPE = (640, 480)):
     sobel_x = tf.constant([[1, 0, -1], [2, 0, -2], [1, 0, -1]], tf.float32)
@@ -43,6 +44,16 @@ def create_model(IMG_SHAPE = (640, 480)):
 def save_model_as_coreml(model, IMG_SHAPE = (640, 480)):
     mlmodel = ct.convert(model, source = 'tensorflow', inputs= [ct.ImageType('name', color_layout='RGB', shape=(1, IMG_SHAPE[0], IMG_SHAPE[1], 3) )])
     mlmodel.save('ML/edges/edgedetection.mlmodel')
+
+    spec = ct.utils.load_spec("ML/edges/edgedetection.mlmodel")
+    inputs = spec.description.input[0]
+    inputs.type.imageType.colorSpace = ft.ImageFeatureType.RGB
+    inputs.type.imageType.height = 640
+    inputs.type.imageType.width = 480
+
+    ct.utils.save_spec(spec, "ML/edges/edgedetection.mlmodel")
+    #
+    # mlmodel.save('ML/edges/edgedetection.mlmodel')
 
 model = create_model()
 print(model.summary())
