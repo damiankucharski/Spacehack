@@ -10,7 +10,7 @@ def create_model(IMG_SHAPE = (640, 480)):
     filter = tf.concat([sobel_x_filter, sobel_y_filter], -1)
 
     model = tf.keras.Sequential()
-    model.add(tf.keras.layers.Input(shape = (700, 700, 3)))
+    model.add(tf.keras.layers.Input(shape = (IMG_SHAPE[0], IMG_SHAPE[1], 3)))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'valid', use_bias = False))
     model.add(tf.keras.layers.Conv2D(2, (3, 3), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
