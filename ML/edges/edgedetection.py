@@ -17,6 +17,7 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Lambda(lambda x: abs(x)))
+    model.add(tf.keras.layers.Reshape((1, 3, IMG_SHAPE[0], IMG_SHAPE[1])))
     model.layers[0].weights[0]
 
     HALFAWAREOWER = np.ones((1,3))/3
