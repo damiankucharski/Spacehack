@@ -1,0 +1,2 @@
+# Spacehack
+Hackathon repository
