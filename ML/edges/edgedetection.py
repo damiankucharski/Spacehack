@@ -42,7 +42,7 @@ def create_model(IMG_SHAPE = (640, 480)):
 
 def save_model_as_coreml(model):
     mlmodel = ct.convert(model, source = 'tensorflow', inputs=[ct.ImageType(name='input_image')] )
-    mlmodel.save('ML/esges/edgedetection.mlmodel')
+    mlmodel.save('ML/edges/edgedetection.mlmodel')
 
 model = create_model()
 print(model.summary())
