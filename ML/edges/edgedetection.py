@@ -16,6 +16,7 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.add(tf.keras.layers.Conv2D(2, (3, 3), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False, name = 'output'))
+    model.add(tf.keras.layers.Reshape((3, IMG_SHAPE[0], IMG_SHAPE[1])))
     #model.add(tf.keras.layers.Flatten())
     #model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
 
