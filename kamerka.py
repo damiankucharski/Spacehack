@@ -3,9 +3,9 @@ import cv2
 from tensorflow import keras
 import cvlib as cv
 from cvlib.object_detection import draw_bbox
-model = keras.models.load_model(r'C:\Users\d.kucharski\Documents\Python Scripts\Spacehacks\Spacehack\model.h5')
-url = 'http://100.111.30.77:8080/video'
-cap = cv2.VideoCapture(0)
+model = keras.models.load_model(r'/home/fakser/hackathon/Spacehack/model.h5')
+url = 'http://192.168.0.73:4747/video'
+cap = cv2.VideoCapture(url)
  
 font                   = cv2.FONT_HERSHEY_SIMPLEX
 bottomLeftCornerOfText = (10,20)
