@@ -27,9 +27,9 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'valid', use_bias = False))
     model.add(tf.keras.layers.Conv2D(2, (3, 3), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
-    model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False, name = 'output'))
+    model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False))
     #model.add(tf.keras.layers.Flatten())
-    #model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
+    model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
 
     HALFAWAREOWER = np.ones((1,3))/3
     x = tf.convert_to_tensor(model.layers[0].get_weights())
@@ -50,11 +50,11 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.layers[2].set_weights(x)
 
     model.layers[3].set_weights(np.array([0, 0.15, 0.4]).reshape(np.array(model.layers[3].get_weights()).shape)/30)
-
+    model.save('model.h5')
     return model
 
 def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
-    mlmodel = ct.convert(model)#, inputs= [ct.ImageType('Layer', color_layout='RGB', shape=(1, 3, IMG_SHAPE[0], IMG_SHAPE[1], 1))])
+    mlmodel = ct.converters.tensorflow.convert(model)#, inputs= [ct.ImageType('Layer', color_layout='RGB', shape=(1, 3, IMG_SHAPE[0], IMG_SHAPE[1], 1))])
     mlmodel.save('ML/edges/edgedetection.mlmodel')
 
     spec = ct.utils.load_spec("ML/edges/edgedetection.mlmodel")
@@ -76,8 +76,8 @@ def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
 model = create_model()
 plt.imshow(model([np.asarray(Image.open(r'C:\Users\Krzysztof Kramarz\Desktop\hackathon spacehacks\Spacehack\ML\depth\test.png').resize((480, 640))).reshape((1, 640, 480, 3))])[0,...])
 plt.show()
-print(model.summary)
-save_model_as_coreml(model)
+# print(model.summary)
+# save_model_as_coreml(model)
 
 
 
