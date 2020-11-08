@@ -38,7 +38,7 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.layers[2].set_weights(x)
 
     model.layers[3].set_weights(np.array([0, 0.15, 0.4]).reshape(np.array(model.layers[3].get_weights()).shape)/30)
-    model.compile()
+
     return model
 
 def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
