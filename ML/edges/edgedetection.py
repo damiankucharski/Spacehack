@@ -49,7 +49,7 @@ def create_model(IMG_SHAPE = (480, 640)):
     x[0,...,0] = np.expand_dims(HALFAWAREOWER,1)
     model.layers[2].set_weights(x)
 
-    model.layers[3].set_weights(np.array([0.6, 0.2, 0.0]).reshape(np.array(model.layers[3].get_weights()).shape)/30)
+    model.layers[3].set_weights(np.array([0.6, 0.2, 0.0]).reshape(np.array(model.layers[3].get_weights()).shape)/40)
     model.save('model.h5')
     return model
 

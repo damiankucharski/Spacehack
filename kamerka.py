@@ -1,11 +1,15 @@
 import numpy as np
 import cv2
-from tensorflow import keras
+import tensorflow as tf
 import cvlib as cv
 from cvlib.object_detection import draw_bbox
-model = keras.models.load_model(r'/home/fakser/hackathon/Spacehack/model.h5')
+
+physical_devices = tf.config.list_physical_devices('GPU') 
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
+model = tf.keras.models.load_model(r'C:\Users\Krzysztof Kramarz\Desktop\hackathon spacehacks\Spacehack\model.h5')
 url = 'http://192.168.0.73:4747/video'
-cap = cv2.VideoCapture(url)
+cap = cv2.VideoCapture(0)
  
 font                   = cv2.FONT_HERSHEY_SIMPLEX
 bottomLeftCornerOfText = (10,20)
