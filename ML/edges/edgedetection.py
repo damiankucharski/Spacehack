@@ -15,9 +15,9 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'valid', use_bias = False))
     model.add(tf.keras.layers.Conv2D(2, (3, 3), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
-    model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False))
+    model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False, name = 'output'))
     #model.add(tf.keras.layers.Flatten())
-    model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
+    #model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
     model.layers[0].weights[0]
 
     HALFAWAREOWER = np.ones((1,3))/3
@@ -52,10 +52,11 @@ def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
     inputs.type.imageType.height = IMG_SHAPE[1]
     inputs.type.imageType.width = IMG_SHAPE[0]
     
-    # output = spec.description.output[0]
-    # output.type.imageType.colorSpace = ft.ImageFeatureType.RGB
-    # output.type.imageType.height = IMG_SHAPE[1]
-    # output.type.imageType.width = IMG_SHAPE[0]
+    output = spec.description.output[0]
+    output.type.imageType.colorSpace = ft.ImageFeatureType.RGB
+    output.type.imageType.height = IMG_SHAPE[1]
+    output.type.imageType.width = IMG_SHAPE[0]
+
     print(spec.description)
     ct.utils.save_spec(spec, "ML/edges/edgedetection.mlmodel")
     #
