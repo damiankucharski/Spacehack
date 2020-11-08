@@ -16,8 +16,8 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.add(tf.keras.layers.Conv2D(2, (3, 3), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(1, (1, 1), (1, 1), padding = 'same', use_bias = False))
     model.add(tf.keras.layers.Conv2D(3, (1, 1), (1, 1), padding = 'same', use_bias = False))
-    model.add(tf.keras.layers.Flatten())
-    model.add(tf.keras.layers.Lambda(lambda x: abs(x)))
+    #model.add(tf.keras.layers.Flatten())
+    model.add(tf.keras.layers.Lambda(lambda x: abs(x), name = 'output'))
     model.layers[0].weights[0]
 
     HALFAWAREOWER = np.ones((1,3))/3
@@ -39,7 +39,7 @@ def create_model(IMG_SHAPE = (480, 640)):
     model.layers[2].set_weights(x)
 
     model.layers[3].set_weights(np.array([0, 0.15, 0.4]).reshape(np.array(model.layers[3].get_weights()).shape)/30)
-
+    model.compile()
     return model
 
 def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
@@ -64,6 +64,7 @@ def save_model_as_coreml(model, IMG_SHAPE = (480, 640)):
 model = create_model()
 print(model.summary())
 save_model_as_coreml(model)
+
 
 
 
